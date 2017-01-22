@@ -1,6 +1,7 @@
 extern crate mustache;
 
-use std::io;
+use std::io::*;
+use std::fs::File;
 use mustache::MapBuilder;
 
 fn main() {
@@ -10,6 +11,8 @@ fn main() {
         .insert_str("name", "Evan")
         .build();
 
-    template.render_data(&mut io::stdout(), &data).unwrap();
+    let mut buffer = File::create("foo.txt").unwrap();
+    template.render_data(&mut buffer, &data).unwrap();
     println!("");
+
 }
