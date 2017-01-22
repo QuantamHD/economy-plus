@@ -1,0 +1,6 @@
+[package]
+name = "fizz"
+version = "0.1.0"
+authors = ["Ethan Mahintorabi <EthanMahintorabi@yahoo.com>"]
+
+[dependencies]
