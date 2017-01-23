@@ -35,10 +35,12 @@ fn compile_folder(input_folder : &Path, output_container_folder : &Path) {
         } else {
             fs::create_dir_all(output_container_folder.join(entry.path()));
         }
-
     }
 }
 
 fn main() {
+
+
+
     compile_folder(Path::new("example_project"), Path::new("output_project"));
 }
