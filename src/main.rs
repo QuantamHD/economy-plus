@@ -8,9 +8,13 @@ use walkdir::WalkDir;
 use std::path::Path;
 use std::fs;
 
-/**
- * Compiles a mustache file and then spits out the output to a file
- */
+/// Compiles a mustache file and then spits out the output to a file
+///
+/// # Examples
+///
+/// ```
+/// compile_mustache_file(Path::new("input.txt"), Path::new("output.txt");)
+/// ```
 fn compile_mustache_file(input : &Path, output : &Path) {
     let template = mustache::compile_path(input).unwrap();
 
@@ -22,17 +26,21 @@ fn compile_mustache_file(input : &Path, output : &Path) {
     template.render_data(&mut buffer, &data).unwrap();
 }
 
-/**
- * Compiles every file in mustache and outputs the result as a folder inside
- * the container folder.
- */
+/// Compiles every file in mustache and outputs the result as a folder inside
+/// the container folder.
+///
+/// # Examples
+/// 
+/// ```
+/// compile_folder(Path::new("example_project"), Path::new("output_project"));
+/// ```
 fn compile_folder(input_folder : &Path, output_container_folder : &Path) {
     for entry in WalkDir::new(input_folder) {
         let entry = entry.unwrap();
-        if !entry.path().is_dir() {
+        if !entry.path().is_dir() { // If it's a file, let's compile
             let input = entry.path().as_os_str();
             compile_mustache_file(entry.path(), output_container_folder.join(input).as_path());
-        } else {
+        } else { // If a directory, create that directory
             fs::create_dir_all(output_container_folder.join(entry.path()));
         }
 
