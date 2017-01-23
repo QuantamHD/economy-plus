@@ -1,7 +1,10 @@
 [package]
-name = "fizz"
+name = "economy-plus"
 version = "0.1.0"
-authors = ["Ethan Mahintorabi <EthanMahintorabi@yahoo.com>"]
+authors = ["Ethan Mahintorabi <EthanMahintorabi@yahoo.com>", "Evan Conrad <econrad@zagmail.gonzaga.edu>"]
 
 [dependencies]
 mustache = "*"
+glob = "*"
+ego-tree = "*"
+walkdir = "*"
