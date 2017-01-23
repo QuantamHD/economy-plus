@@ -1,36 +1,15 @@
-extern crate mustache;
-extern crate ego_tree;
 extern crate walkdir;
+extern crate mustache;
+mod templates;
 
 #[macro_use]
 extern crate clap;
 
-
-use std::fs::File;
-use mustache::MapBuilder;
 use walkdir::WalkDir;
 use std::path::Path;
 use std::fs;
-use std::io::BufWriter;
 use std::str;
-
-/// Compiles a mustache file and then spits out the output to a file
-///
-/// # Examples
-///
-/// ```
-/// compile_mustache_file(Path::new("input.txt"), Path::new("output.txt");)
-/// ```
-fn compile_mustache_file(input : &Path, output : &Path, name : &String) {
-    let template = mustache::compile_path(input).unwrap();
-
-    let data = MapBuilder::new()
-        .insert_str("name", name)
-        .build();
-
-    let mut buffer = File::create(output).unwrap();
-    template.render_data(&mut buffer, &data).unwrap();
-}
+use templates::mustache_template::compile::compile_to_file;
 
 /// Compiles every file in mustache and outputs the result as a folder inside
 /// the container folder.
@@ -45,7 +24,7 @@ fn compile_folder(input_folder : &Path, output_container_folder : &Path, name : 
         let entry = entry.unwrap();
         if !entry.path().is_dir() { // If it's a file, let's compile
             let input = entry.path().as_os_str();
-            compile_mustache_file(entry.path(),
+            compile_to_file(entry.path(),
                 output_container_folder.join(input).as_path(),
                 name);
         } else { // If a directory, create that directory
@@ -53,7 +32,7 @@ fn compile_folder(input_folder : &Path, output_container_folder : &Path, name : 
             let mustached_folder : &str = path_name.to_str().unwrap();
 
             let template = mustache::compile_str(mustached_folder).unwrap();
-            let data = MapBuilder::new()
+            let data = mustache::MapBuilder::new()
                 .insert_str("name", name)
                 .build();
 
