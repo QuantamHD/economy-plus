@@ -5,7 +5,6 @@ extern crate walkdir;
 use std::fs::File;
 use self::mustache::MapBuilder;
 use std::path::Path;
-use std::result::Result;
 use self::walkdir::WalkDir;
 use std::fs;
 
