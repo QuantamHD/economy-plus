@@ -1,7 +1,7 @@
 [package]
 name = "economy-plus"
 version = "0.1.0"
-authors = ["Ethan Mahintorabi <EthanMahintorabi@yahoo.com>", "Evan Conrad <econrad@zagmail.gonzaga.edu>"]
+authors = ["Ethan Mahintorabi <EthanMahintorabi@yahoo.com>", "Evan Conrad <notmyemail@blah.com>"]
 
 [dependencies]
 mustache = "*"
