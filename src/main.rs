@@ -9,7 +9,7 @@ use walkdir::WalkDir;
 use std::path::Path;
 use std::fs;
 use std::str;
-use templates::mustache_template::compile::compile_to_file;
+use templates::mustache_template::compile::*;
 
 /// Compiles every file in mustache and outputs the result as a folder inside
 /// the container folder.
@@ -30,16 +30,8 @@ fn compile_folder(input_folder : &Path, output_container_folder : &Path, name : 
         } else { // If a directory, create that directory
             let path_name = output_container_folder.join(entry.path());
             let mustached_folder : &str = path_name.to_str().unwrap();
-
-            let template = mustache::compile_str(mustached_folder).unwrap();
-            let data = mustache::MapBuilder::new()
-                .insert_str("name", name)
-                .build();
-
-            let mut buffer : Vec<u8> = Vec::new();
-            template.render_data(&mut buffer, &data).unwrap();
-
-            fs::create_dir_all(Path::new(&String::from_utf8(buffer).unwrap()));
+            let compiled_path_name = compile_string(&String::from(mustached_folder), name);
+            fs::create_dir_all(Path::new(&compiled_path_name));
         }
     }
 }
